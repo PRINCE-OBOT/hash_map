@@ -130,6 +130,35 @@ export default class LinkedList {
     }
   }
 
+  removeAt(index, arrOfBucket, hashCode) {
+    if (index < 0) throw RangeError("Index below range");
+
+    if (!this.list) {
+      throw RangeError("Index above range");
+    } else {
+      if (index === 0) {
+        const secondList = this.list.nextNode;
+        arrOfBucket[hashCode] = secondList;
+      } else {
+        const recursive = (node, depth) => {
+          if (node.nextNode) {
+            if (index === depth) {
+              const secondList = node.nextNode.nextNode;
+              node.nextNode = secondList;
+            } else {
+              depth++;
+              return recursive(node.nextNode, depth);
+            }
+          } else {
+            throw RangeError("Index above range");
+          }
+        };
+
+        recursive(this.list, 1);
+      }
+    }
+  }
+
   display() {
     console.log(this.list);
   }

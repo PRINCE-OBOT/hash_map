@@ -83,9 +83,15 @@ class HashMap {
 
     if (!this.arrOfBucket[hashCode]) return false;
 
-    this.arrOfBucket[hashCode] = null;
+    list.reset(this.arrOfBucket[hashCode]);
 
-    return true;
+    const index = list.findIndex(key);
+
+    if (index === -1) return false;
+    else {
+      list.removeAt(index, this.arrOfBucket, hashCode);
+      return true;
+    }
   }
 
   length() {

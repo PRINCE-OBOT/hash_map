@@ -18,6 +18,8 @@ test.set("moon", "wait");
 test.set("glue", "wait");
 test.set("now", "wait");
 
+test.remove('lion')
+
 console.log(test.length())
 
 test.display()
