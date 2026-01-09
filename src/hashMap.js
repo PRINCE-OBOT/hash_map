@@ -1,14 +1,13 @@
+import { th } from "date-fns/locale";
 import LinkedList from "./linkedList";
 import Node from "./node";
 
 const list = new LinkedList();
 
 class HashMap {
-  capacity = 16;
-
   constructor() {
     this.loadFactor = 0.75;
-    this.capacityNew = this.capacity;
+    this.capacity = 16;
     this.arrOfBucket = [];
   }
 
@@ -18,8 +17,7 @@ class HashMap {
     const primeNumber = 31;
 
     for (let i = 0; i < key.length; i++) {
-      hashCode =
-        (primeNumber * hashCode + key.charCodeAt(i)) % this.capacityNew;
+      hashCode = (primeNumber * hashCode + key.charCodeAt(i)) % this.capacity;
     }
 
     return hashCode;
@@ -40,10 +38,24 @@ class HashMap {
     } else {
       list.append(key, value);
 
-      if (this.length() > this.capacityNew * this.loadFactor) {
-        this.capacityNew = this.capacityNew + this.capacity;
+      if (this.length() > this.capacity * this.loadFactor) {
+        this.capacity *= 2;
+
+        const entries = this.entries();
+
+        this.arrOfBucket.splice(0);
+
+        this.grow(entries);
       }
     }
+  }
+
+  grow(entries) {
+    entries.forEach((arrOfKeyAndValue) => {
+      const [key, value] = arrOfKeyAndValue;
+
+      this.set(key, value);
+    });
   }
 
   get(key) {
@@ -77,9 +89,11 @@ class HashMap {
   }
 
   length() {
-    return this.arrOfBucket
-      .filter(Boolean)
-      .reduce((acc, bucket) => acc + new LinkedList(bucket).size(), 0);
+    return this.arrOfBucket.filter(Boolean).reduce((acc, bucket) => {
+      list.reset(bucket);
+
+      return acc + list.size();
+    }, 0);
   }
 
   clear() {
@@ -106,7 +120,7 @@ class HashMap {
       "Array of Bucket",
       this.arrOfBucket,
       "New Capacity",
-      this.capacityNew
+      this.capacity
     );
   }
 }
