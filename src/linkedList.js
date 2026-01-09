@@ -21,10 +21,6 @@ export default class LinkedList {
     }
   }
 
-  prepend(value) {
-    this.list = new Node(value, this.list);
-  }
-
   size() {
     if (!this.list) {
       return 0;
@@ -37,66 +33,6 @@ export default class LinkedList {
         return numberOfNode;
       };
       return recursive(this.list, 1);
-    }
-  }
-
-  head() {
-    return this.list === null ? undefined : this.list.value;
-  }
-
-  tail() {
-    if (!this.list) return undefined;
-
-    const recursive = (node) => {
-      if (node.nextNode) return recursive(node.nextNode);
-      return node.value;
-    };
-    return recursive(this.list);
-  }
-
-  at(index) {
-    if (index < 0 || !this.list) return undefined;
-    else {
-      const recursive = (list, depth) => {
-        if (index === depth) {
-          return list.value;
-        }
-
-        if (!list.nextNode) {
-          return undefined;
-        } else {
-          depth++;
-          return recursive(list.nextNode, depth);
-        }
-      };
-
-      return recursive(this.list, 0);
-    }
-  }
-
-  pop() {
-    if (!this.list) return undefined;
-    else {
-      const recursive = (list) => {
-        if (list.nextNode) {
-          if (!list.nextNode.nextNode) {
-            const secondList = list.nextNode;
-
-            list.nextNode = null;
-
-            return secondList;
-          }
-        } else {
-          const secondList = list;
-
-          this.list = null;
-
-          return secondList;
-        }
-        return recursive(list.nextNode);
-      };
-
-      return recursive(this.list);
     }
   }
 
@@ -187,81 +123,6 @@ export default class LinkedList {
       };
 
       return recursive(this.list, 0);
-    }
-  }
-
-  toString() {
-    if (!this.list) return "";
-    else {
-      const recursive = (list, listStringFormat) => {
-        listStringFormat += `(${list.value}) -> `;
-
-        if (!list.nextNode) return `${listStringFormat}${list.nextNode}`;
-
-        return recursive(list.nextNode, listStringFormat);
-      };
-
-      return recursive(this.list, "");
-    }
-  }
-
-  insertAt(index, ...values) {
-    if (index < 0) throw RangeError("Index below range");
-
-    if (!this.list) {
-      if (index !== 0) throw RangeError("Index above range");
-
-      values.forEach((value) => this.append(value));
-    } else {
-      if (index === 0) {
-        values.reverse().forEach((value) => this.prepend(value));
-      } else {
-        const recursive = (list, depth) => {
-          if (list.nextNode) {
-            if (index === depth) {
-              values.reverse().forEach((value) => {
-                list.nextNode = new Node(value, list.nextNode);
-              });
-            } else {
-              depth++;
-              return recursive(list.nextNode, depth);
-            }
-          } else {
-            throw RangeError("Index above range");
-          }
-        };
-
-        recursive(this.list, 1);
-      }
-    }
-  }
-
-  removeAt(index, arrOfBucket, hashCode) {
-    if (index < 0) throw RangeError("Index below range");
-
-    if (!this.list) {
-      throw RangeError("Index above range");
-    } else {
-      if (index === 0) {
-        const secondList = this.list.nextNode;
-        arrOfBucket[hashCode] = secondList;
-      } else {
-        const recursive = (list, depth) => {
-          if (list.nextNode) {
-            if (index === depth) {
-              const secondList = list.nextNode.nextNode;
-              list.nextNode = secondList;
-            } else {
-              depth++;
-              return recursive(list.nextNode, depth);
-            }
-          } else {
-            throw RangeError("Index above range");
-          }
-        };
-
-        recursive(this.list, 1);
-      }
     }
   }
 
