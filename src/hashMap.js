@@ -1,6 +1,8 @@
 import LinkedList from "./linkedList";
 import Node from "./node";
 
+const list = new LinkedList();
+
 class HashMap {
   capacity = 16;
 
@@ -29,7 +31,7 @@ class HashMap {
     if (!this.arrOfBucket[hashCode])
       this.arrOfBucket[hashCode] = new Node(key, value);
 
-    const list = new LinkedList(this.arrOfBucket[hashCode]);
+    list.reset(this.arrOfBucket[hashCode]);
 
     const contains = list.contains(key);
 
@@ -49,7 +51,7 @@ class HashMap {
 
     if (!this.arrOfBucket[hashCode]) return null;
 
-    const list = new LinkedList(this.arrOfBucket[hashCode]);
+    list.reset(this.arrOfBucket[hashCode]);
 
     return list.get(key);
   }
@@ -59,7 +61,7 @@ class HashMap {
 
     if (!this.arrOfBucket[hashCode]) return false;
 
-    const list = new LinkedList(this.arrOfBucket[hashCode]);
+    list.reset(this.arrOfBucket[hashCode]);
 
     return list.contains(key);
   }
@@ -85,17 +87,17 @@ class HashMap {
   }
 
   keys() {
-    const list = new LinkedList(this.arrOfBucket);
+    list.reset(this.arrOfBucket);
     return list.keyValue("key");
   }
 
   values() {
-    const list = new LinkedList(this.arrOfBucket);
+    list.reset(this.arrOfBucket);
     return list.keyValue("value");
   }
 
   entries() {
-    const list = new LinkedList(this.arrOfBucket);
+    list.reset(this.arrOfBucket);
     return list.entries();
   }
 

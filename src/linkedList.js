@@ -1,7 +1,11 @@
 import Node from "./node";
 
 export default class LinkedList {
-  constructor(list) {
+  constructor() {
+    this.list = null;
+  }
+
+  reset(list) {
     this.list = list;
   }
 
