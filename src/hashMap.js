@@ -1,4 +1,3 @@
-import { th } from "date-fns/locale";
 import LinkedList from "./linkedList";
 import Node from "./node";
 

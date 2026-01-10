@@ -18,7 +18,7 @@ test.set("moon", "wait");
 test.set("glue", "wait");
 test.set("now", "wait");
 
-test.remove('lion')
+test.remove('ice cream')
 
 console.log(test.length())
 
