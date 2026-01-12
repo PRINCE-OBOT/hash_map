@@ -1,7 +1,6 @@
-import Node from "./node";
-
 export default class LinkedList {
-  constructor() {
+  constructor(NODE) {
+    this.NODE = NODE;
     this.list = null;
   }
 
@@ -9,15 +8,24 @@ export default class LinkedList {
     this.list = list;
   }
 
+  nodeKeyChecker(key, value) {
+    const nodes = new this.NODE();
+
+    if (!nodes.value) return new this.NODE(key);
+    else return new this.NODE(key, value);
+  }
+
   append(key, value) {
+    const nodes = this.nodeKeyChecker(key, value);
+    console.log(nodes, 'nodes')
     if (!this.list) {
-      this.list = new Node(key, value);
+      this.list = nodes;
     } else {
       const recursive = (node) => {
         if (node.nextNode) {
           recursive(node.nextNode);
         } else {
-          node.nextNode = new Node(key, value);
+          node.nextNode = nodes;
         }
       };
 
